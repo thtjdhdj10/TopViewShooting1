@@ -37,3 +37,12 @@ C:\Users\thtjdhdj\Desktop\shooting\obj\Debug\HW2.csprojResolveAssemblyReference.
 C:\Users\thtjdhdj\Desktop\shooting\obj\Debug\HW2.Form1.resources
 C:\Users\thtjdhdj\Desktop\shooting\obj\Debug\HW2.Properties.Resources.resources
 C:\Users\thtjdhdj\Desktop\shooting\obj\Debug\HW2.csproj.GenerateResource.Cache
+C:\Users\thtjdhdj\Desktop\TopViewShooting\bin\Debug\HW2.exe.config
+C:\Users\thtjdhdj\Desktop\TopViewShooting\obj\Debug\HW2.exe
+C:\Users\thtjdhdj\Desktop\TopViewShooting\obj\Debug\HW2.pdb
+C:\Users\thtjdhdj\Desktop\TopViewShooting\bin\Debug\HW2.exe
+C:\Users\thtjdhdj\Desktop\TopViewShooting\bin\Debug\HW2.pdb
+C:\Users\thtjdhdj\Desktop\TopViewShooting\obj\Debug\HW2.csprojResolveAssemblyReference.cache
+C:\Users\thtjdhdj\Desktop\TopViewShooting\obj\Debug\HW2.Form1.resources
+C:\Users\thtjdhdj\Desktop\TopViewShooting\obj\Debug\HW2.Properties.Resources.resources
+C:\Users\thtjdhdj\Desktop\TopViewShooting\obj\Debug\HW2.csproj.GenerateResource.Cache

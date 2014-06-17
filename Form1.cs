@@ -36,6 +36,7 @@ namespace HW2
         int counting = 0;
         int cool_beam = 0;
         int kill = 0;
+        bool reset;
 
         objects.player pl;
         SoundPlayer sp;
@@ -53,7 +54,7 @@ namespace HW2
                 ens.Add(new objects.enomy() { xPos = rnd, yPos = 15 + i * 35, hp = 60, hp_max = 60, });
             }
 
-            pl = new objects.player(400, 300);
+            pl = new objects.player(400, 500);
 
             Bitmap bit_beam = Properties.Resources._beam;
             Bitmap bit_beam_root = Properties.Resources._beam_root;
@@ -127,6 +128,20 @@ namespace HW2
 
                 case Keys.R:
                     pl.live = true;
+                    reset = true;
+                    for (int i = 0; i < ens.Count(); )
+                    {
+                        ens.RemoveAt(0);
+                    }
+                    Random r = new Random();
+                    for (int i = 0; i < 5; i++)
+                    {
+                        int rnd = r.Next(50, 750);
+                        ens.Add(new objects.enomy() { xPos = rnd, yPos = 15 + i * 35, hp = 60, hp_max = 60, });
+                    }
+                    kill = 0;
+                    label1.Text = "kill : 0";
+                    reset = false;
                     break;
 
                 default:
@@ -318,19 +333,23 @@ namespace HW2
         }
         private bool bullet_hit(objects.enomy enom, float dam)
         {
-            if(enom != null){
+            if (enom != null)
+            {
                 enom.hp -= dam;
-                if (enom.hp <= 0)
+                if (!reset)
                 {
-                    ens.Remove(enom);
-                    kill++;
-                    label1.Text = "kill : ";
-                    label1.Text += kill;
-                    int rnd = rand(700) + 50;
-                    ens.Add(new objects.enomy() { xPos = rnd, yPos = rnd % 250, hp = 60, hp_max = 60 });
-                    if (kill % 10 == 0)
+                    if (enom.hp <= 0)
                     {
-                        ens.Add(new objects.enomy() { xPos = rnd, yPos = rnd % 250, hp = 500, hp_max = 2000 });
+                        ens.Remove(enom);
+                        kill++;
+                        label1.Text = "kill : ";
+                        label1.Text += kill;
+                        int rnd = rand(700) + 50;
+                        ens.Add(new objects.enomy() { xPos = rnd, yPos = rnd % 250, hp = 60, hp_max = 60 });
+                        if (kill % 10 == 0)
+                        {
+                            ens.Add(new objects.enomy() { xPos = rnd, yPos = rnd % 250, hp = 500, hp_max = 2000 });
+                        }
                     }
                 }
                 return true;
@@ -462,21 +481,6 @@ namespace HW2
                 }
             }
 
-            foreach (objects.enomy i in ens)
-            {
-                i.xPos = i.xPos + Convert.ToInt32(i.speed * Math.Cos(i.direction * Math.PI / 180));
-                i.yPos = i.yPos + Convert.ToInt32(i.speed * Math.Sin(i.direction * Math.PI / 180));
-                if (touchofmap(i.xPos, i.yPos))
-                {
-                    i.direction = point_direction(i.xPos, i.yPos, pl.xPos, pl.yPos);
-                }
-                if (player_collision(i.xPos, i.yPos))
-                {
-                    pl.live = false;
-                    pl.isFire = false;
-                }
-            }
-
             foreach (objects.bullet i in bul)
             {
                 i.xPos = i.xPos + Convert.ToInt32(i.speed * Math.Cos(i.direction * Math.PI / 180));
@@ -499,6 +503,22 @@ namespace HW2
                 if (outofmap((int)i.xPos, (int)i.yPos))
                 {
                     list_beam.Remove(i);
+                    break;
+                }
+            }
+
+            foreach (objects.enomy i in ens)
+            {
+                i.xPos = i.xPos + Convert.ToInt32(i.speed * Math.Cos(i.direction * Math.PI / 180));
+                i.yPos = i.yPos + Convert.ToInt32(i.speed * Math.Sin(i.direction * Math.PI / 180));
+                if (touchofmap(i.xPos, i.yPos))
+                {
+                    i.direction = point_direction(i.xPos, i.yPos, pl.xPos, pl.yPos);
+                }
+                if (player_collision(i.xPos, i.yPos))
+                {
+                    pl.live = false;
+                    pl.isFire = false;
                     break;
                 }
             }

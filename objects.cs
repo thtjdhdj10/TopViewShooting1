@@ -26,6 +26,7 @@ namespace HW2
             public bool isFire;
             public bool stat;
             public bool live = true;
+            public bool pow;
             public player(int xPos, int yPos)
             {
                 this.xPos = xPos;
