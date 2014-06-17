@@ -115,6 +115,24 @@
   <ItemGroup>
     <None Include="bin\Debug\en_4.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\_barrier.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\_player_pow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\en_11.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\_v1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\_v1_h.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\_v1_m.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

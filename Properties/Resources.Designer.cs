@@ -63,6 +63,16 @@ namespace HW2.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap _barrier {
+            get {
+                object obj = ResourceManager.GetObject("_barrier", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap _beam {
             get {
                 object obj = ResourceManager.GetObject("_beam", resourceCulture);
@@ -103,9 +113,49 @@ namespace HW2.Properties {
         /// <summary>
         ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
         /// </summary>
+        internal static System.Drawing.Bitmap _player_pow {
+            get {
+                object obj = ResourceManager.GetObject("_player_pow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
         internal static System.Drawing.Bitmap _player1 {
             get {
                 object obj = ResourceManager.GetObject("_player1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap _v1 {
+            get {
+                object obj = ResourceManager.GetObject("_v1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap _v1_h {
+            get {
+                object obj = ResourceManager.GetObject("_v1_h", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap _v1_m {
+            get {
+                object obj = ResourceManager.GetObject("_v1_m", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -165,6 +215,16 @@ namespace HW2.Properties {
         internal static System.Drawing.Bitmap en_4 {
             get {
                 object obj = ResourceManager.GetObject("en_4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   System.Drawing.Bitmap 형식의 지역화된 리소스를 찾습니다.
+        /// </summary>
+        internal static System.Drawing.Bitmap en_boss {
+            get {
+                object obj = ResourceManager.GetObject("en_boss", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

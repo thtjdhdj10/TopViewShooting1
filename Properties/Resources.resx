@@ -154,4 +154,22 @@
   <data name="en_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\bin\Debug\en_4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="_barrier" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\_barrier.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_player_pow" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\_player_pow.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="en_boss" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\en_11.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_v1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\_v1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_v1_h" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\_v1_h.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="_v1_m" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\bin\Debug\_v1_m.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

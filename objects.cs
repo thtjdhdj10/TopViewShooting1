@@ -27,6 +27,9 @@ namespace HW2
             public bool stat;
             public bool live = true;
             public bool pow;
+            public bool bar = true;
+            public int upgrade = 0;
+            public int bar_charge = 300;
             public player(int xPos, int yPos)
             {
                 this.xPos = xPos;
@@ -48,10 +51,23 @@ namespace HW2
             public int sprite_number;
             public int sprite_end;
         }
+        public class v1m
+        {
+            public int xPos;
+            public int yPos;
+            public double direction;
+        }
+        public class v1h
+        {
+            public int xPos;
+            public int yPos;
+            public double direction;
+        }
         public class enom_tan
         {
             public int xPos;
             public int yPos;
+            public int speed = 12;
             public float direction;
 
             public int dcount;
@@ -61,8 +77,8 @@ namespace HW2
         }
         public class bullet
         {
-            public int xPos;
-            public int yPos;
+            public float xPos;
+            public float yPos;
             public int speed = 12;
             public float direction;
 

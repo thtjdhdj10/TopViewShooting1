@@ -33,10 +33,16 @@ namespace HW2
         List<Bitmap> beam_sprite = new List<Bitmap>();
         List<Bitmap> beam_root_sprite = new List<Bitmap>();
 
+        Bitmap bullet = Properties.Resources.bullet_;
+
+        objects.v1m vm;
+        objects.v1h vh;
+
         int counting = 0;
         int cool_beam = 0;
         int kill = 0;
         bool reset;
+        int e_count = 4;
 
         objects.player pl;
         SoundPlayer sp;
@@ -48,7 +54,7 @@ namespace HW2
             sp.PlayLooping();
 
             Random r = new Random();
-            for (int i = 0; i < 5; i++ )
+            for (int i = 0; i < e_count; i++ )
             {
                 int rnd = r.Next(50, 750);
                 ens.Add(new objects.enomy() { xPos = rnd, yPos = 15 + i * 35, hp = 60, hp_max = 60, });
@@ -133,8 +139,12 @@ namespace HW2
                     {
                         ens.RemoveAt(0);
                     }
+                    for (int i = 0; i < etan.Count(); )
+                    {
+                        etan.RemoveAt(0);
+                    }
                     Random r = new Random();
-                    for (int i = 0; i < 5; i++)
+                    for (int i = 0; i < e_count; i++)
                     {
                         int rnd = r.Next(50, 750);
                         ens.Add(new objects.enomy() { xPos = rnd, yPos = 15 + i * 35, hp = 60, hp_max = 60, });
@@ -212,10 +222,25 @@ namespace HW2
         {
             if(pl.live)
             {
-                Bitmap b = Properties.Resources._player;
-                pl.direction = point_direction(pl.xPos, pl.yPos, mouseX(), mouseY());
-                b = rotate(b, pl.direction);
-                e.Graphics.DrawImage(b, pl.xPos - 16, pl.yPos - 16);
+                if (pl.bar)
+                {
+                    Bitmap b = Properties.Resources._barrier;
+                    e.Graphics.DrawImage(b, pl.xPos - 32, pl.yPos - 32);
+                }
+                if (!pl.pow)
+                {
+                    Bitmap b = Properties.Resources._player;
+                    pl.direction = point_direction(pl.xPos, pl.yPos, mouseX(), mouseY());
+                    b = rotate(b, pl.direction);
+                    e.Graphics.DrawImage(b, pl.xPos - 16, pl.yPos - 16);
+                }
+                else
+                {
+                    Bitmap b = Properties.Resources._player_pow;
+                    pl.direction = point_direction(pl.xPos, pl.yPos, mouseX(), mouseY());
+                    b = rotate(b, pl.direction);
+                    e.Graphics.DrawImage(b, pl.xPos - 16, pl.yPos - 16);
+                }
             }
             foreach (objects.enomy i in ens)
             {
@@ -236,14 +261,33 @@ namespace HW2
                 {
                     b = Properties.Resources.en_4;
                 }
-                b = rotate(b, point_direction(i.xPos, i.yPos, pl.xPos, pl.yPos));
-                e.Graphics.DrawImage(b, i.xPos - 16, i.yPos - 16);
+                if (i.hp_max == 2000)
+                {
+                    b = Properties.Resources.en_boss;
+                }
+                if (i.hp_max == 4000)
+                {
+                    b = Properties.Resources._v1;
+                    e.Graphics.DrawImage(b, i.xPos - 73, i.yPos - 73);
+                    Bitmap b1 = Properties.Resources._v1_m;
+                    Bitmap b2 = Properties.Resources._v1_h;
+                    b1 = rotate(b1, (float)vm.direction);
+                    vm.direction += 6;
+                    b2 = rotate(b2, (float)vh.direction);
+                    vh.direction += 1;
+                    e.Graphics.DrawImage(b1, i.xPos - 73, i.yPos - 73);
+                    e.Graphics.DrawImage(b2, i.xPos - 50, i.yPos - 50);
+                }
+                else
+                {
+                    b = rotate(b, point_direction(i.xPos, i.yPos, pl.xPos, pl.yPos));
+                    e.Graphics.DrawImage(b, i.xPos - 16, i.yPos - 16);
+                }
             }
             foreach (objects.bullet i in bul)
             {
-                Bitmap b = Properties.Resources.bullet_;
-                b = rotate(b, i.direction);
-                e.Graphics.DrawImage(b, i.xPos - 16, i.yPos - 16);
+                Bitmap bb = rotate(bullet, i.direction);
+                e.Graphics.DrawImage(bb, i.xPos - 16, i.yPos - 16);
             }
             foreach (objects.enom_tan i in etan)
             {
@@ -312,20 +356,30 @@ namespace HW2
             return (float)degree;
         }   //x1, y1, x2, y2
 
-        private objects.enomy collision_check(int x, int y)
+        private objects.enomy collision_check(float x, float y)
         {
             foreach (objects.enomy i in ens)
             {
-                if ((i.xPos - x) * (i.xPos - x) + (i.yPos - y) * (i.yPos - y) < 400)
+                if (i.hp_max != 4000)
                 {
-                    return i;
+                    if ((i.xPos - x) * (i.xPos - x) + (i.yPos - y) * (i.yPos - y) < 400)
+                    {
+                        return i;
+                    }
+                }
+                else
+                {
+                    if ((i.xPos - x) * (i.xPos - x) + (i.yPos - y) * (i.yPos - y) < 2500)
+                    {
+                        return i;
+                    }
                 }
             }
             return null;
         }
         private bool player_collision(int x, int y)
         {
-            if ((pl.xPos - x) * (pl.xPos - x) + (pl.yPos - y) * (pl.yPos - y) < 400)
+            if ((pl.xPos - x) * (pl.xPos - x) + (pl.yPos - y) * (pl.yPos - y) < 100)
             {
                 return true;
             }
@@ -333,23 +387,11 @@ namespace HW2
         }
         private bool bullet_hit(objects.enomy enom, float dam)
         {
-            if (enom != null)
-            {
+            if (enom != null){
                 enom.hp -= dam;
-                if (!reset)
-                {
-                    if (enom.hp <= 0)
-                    {
-                        ens.Remove(enom);
-                        kill++;
-                        label1.Text = "kill : ";
-                        label1.Text += kill;
-                        int rnd = rand(700) + 50;
-                        ens.Add(new objects.enomy() { xPos = rnd, yPos = rnd % 250, hp = 60, hp_max = 60 });
-                        if (kill % 10 == 0)
-                        {
-                            ens.Add(new objects.enomy() { xPos = rnd, yPos = rnd % 250, hp = 500, hp_max = 2000 });
-                        }
+                if (!reset){
+                    if (enom.hp <= 0){
+                        enom_die(enom);
                     }
                 }
                 return true;
@@ -359,24 +401,55 @@ namespace HW2
                 return false;
             }
         }
+        private void enom_die(objects.enomy enom)
+        {
+            ens.Remove(enom);
+            kill++;
+            label1.Text = "kill : ";
+            label1.Text += kill;
+            int rnd = rand(700) + 50;
+            ens.Add(new objects.enomy() { xPos = rnd, yPos = rnd % 250, hp = 60, hp_max = 60 });
+            if (kill % 10 == 0)
+            {
+                ens.Add(new objects.enomy() { xPos = rnd, yPos = rnd % 200, hp = 300, hp_max = 2000 });
+            }
+            if (kill == 100)
+            {
+                reset = true;
+                for (int i = Math.Min(4, ens.Count()); i < ens.Count(); )
+                {
+                    ens.RemoveAt(0);
+                }
+                for (int i = 0; i < etan.Count(); )
+                {
+                    etan.RemoveAt(0);
+                }
+                reset = false;
+                ens.Add(new objects.enomy() { xPos = 400, yPos = 250, hp = 2000, hp_max = 4000 });
+                vm = new objects.v1m() { xPos = 400, yPos = 250, direction = 0 };
+                vh = new objects.v1h() { xPos = 400, yPos = 250, direction = 0 };
+            }
+        }
         private void Fire_tan1()
         {
+            int dir = (int)point_direction(pl.xPos, pl.yPos, mouseX(), mouseY());
+
             bul.Add(new objects.bullet() {
                 xPos = pl.xPos,
                 yPos = pl.yPos,
-                direction = point_direction(pl.xPos, pl.yPos, mouseX(), mouseY())
+                direction = dir
             });
             bul.Add(new objects.bullet()
             {
                 xPos = pl.xPos,
                 yPos = pl.yPos,
-                direction = point_direction(pl.xPos, pl.yPos, mouseX(), mouseY()) + 5
+                direction = dir + 5
             });
             bul.Add(new objects.bullet()
             {
                 xPos = pl.xPos,
                 yPos = pl.yPos,
-                direction = point_direction(pl.xPos, pl.yPos, mouseX(), mouseY()) - 5
+                direction = dir - 5
             });
         }
         private void Fire_beam()
@@ -402,8 +475,44 @@ namespace HW2
                 });
             }
         }
+        private void enom_fire()
+        {
+            Random r = new Random();
+            foreach (objects.enomy i in ens)
+            {
+                if (i.hp_max != 4000)
+                {
+                    if (counting % 3 == 0)
+                    {
+                        int rnd = r.Next(1, 40);
+                        if (rnd == 5)
+                        {
+                            etan.Add(new objects.enom_tan()
+                            {
+                                xPos = i.xPos,
+                                yPos = i.yPos,
+                                direction = point_direction(i.xPos, i.yPos, pl.xPos, pl.yPos)
+                            });
+                        }
+                    }
+                }
+                else
+                {
+                    if (counting % 3 == 0)
+                    {
+                        etan.Add(new objects.enom_tan()
+                        {
+                            xPos = i.xPos,
+                            yPos = i.yPos,
+                            direction = (float)vm.direction,
+                            speed = 2
+                        });
+                    }
+                }
+            }
+        }
 
-        private bool outofmap(int x, int y)
+        private bool outofmap(float x, float y)
         {
             if (x < 0 || x > 800 || y < 0 || y > 600)
             {
@@ -429,10 +538,23 @@ namespace HW2
             int y = PointToClient(new Point(MousePosition.Y, MousePosition.Y)).Y;
             return y;
         }
+        private void bar_init()
+        {
+            pl.bar = true;
+            pl.bar_charge = 50;
+        }
+        private void bar_break()
+        {
+            pl.pow = true;
+            pl.bar = false;
+            pl.bar_charge = 300;
+        }
+
 
         private void timer1_Tick(object sender, EventArgs e)
         {
             counting++;
+            enom_fire();
             Invalidate(false);
 
             if (pl.xVecInc && pl.stat != true)
@@ -509,17 +631,30 @@ namespace HW2
 
             foreach (objects.enomy i in ens)
             {
-                i.xPos = i.xPos + Convert.ToInt32(i.speed * Math.Cos(i.direction * Math.PI / 180));
-                i.yPos = i.yPos + Convert.ToInt32(i.speed * Math.Sin(i.direction * Math.PI / 180));
-                if (touchofmap(i.xPos, i.yPos))
+                if (i.hp_max != 4000)
                 {
-                    i.direction = point_direction(i.xPos, i.yPos, pl.xPos, pl.yPos);
-                }
-                if (player_collision(i.xPos, i.yPos))
-                {
-                    pl.live = false;
-                    pl.isFire = false;
-                    break;
+                    i.xPos = i.xPos + Convert.ToInt32(i.speed * Math.Cos(i.direction * Math.PI / 180));
+                    i.yPos = i.yPos + Convert.ToInt32(i.speed * Math.Sin(i.direction * Math.PI / 180));
+                    if (touchofmap(i.xPos, i.yPos))
+                    {
+                        i.direction = point_direction(i.xPos, i.yPos, pl.xPos, pl.yPos);
+                    }
+                    if (player_collision(i.xPos, i.yPos))
+                    {
+                        if (!pl.pow)
+                        {
+                            if (!pl.bar)
+                            {
+                                pl.live = false;
+                                pl.isFire = false;
+                                break;
+                            }
+                            else
+                            {
+                                bar_break();
+                            }
+                        }
+                    }
                 }
             }
 
@@ -529,10 +664,20 @@ namespace HW2
                 i.yPos = i.yPos + Convert.ToInt32(6 * Math.Sin(i.direction * Math.PI / 180));
                 if (player_collision(i.xPos, i.yPos))
                 {
-                    etan.Remove(i);
-                    pl.live = false;
-                    pl.isFire = false;
-                    break;
+                    if (!pl.pow)
+                    {
+                        if (!pl.bar)
+                        {
+                            etan.Remove(i);
+                            pl.live = false;
+                            pl.isFire = false;
+                            break;
+                        }
+                        else
+                        {
+                            bar_break();
+                        }
+                    }
                 }
                 if (outofmap(i.xPos, i.yPos))
                 {
@@ -541,21 +686,16 @@ namespace HW2
                 }
             }
 
-            if (counting % 3 == 0)
+            if (!pl.bar)
             {
-                Random r = new Random();
-                foreach (objects.enomy i in ens)
+                pl.bar_charge -= 1;
+                if (pl.bar_charge == 0)
                 {
-                    int rnd = r.Next(1, 40);
-                    if (rnd == 5)
-                    {
-                        etan.Add(new objects.enom_tan()
-                        {
-                            xPos = i.xPos,
-                            yPos = i.yPos,
-                            direction = point_direction(i.xPos, i.yPos, pl.xPos, pl.yPos)
-                        });
-                    }
+                    bar_init();
+                }
+                else if (pl.bar_charge == 250)
+                {
+                    pl.pow = false;
                 }
             }
 
@@ -577,6 +717,7 @@ namespace HW2
                     break;
                 }
             }
+
             cool_beam = Math.Max(0, cool_beam - 1);
         }
         private void timer2_Tick(object sender, EventArgs e)
